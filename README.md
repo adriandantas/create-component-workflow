@@ -18,6 +18,13 @@ Create a port-forward to the Argo Workflows server:
 kubectl -n argo port-forward deployment/argo-server 2746:2746
 ```
 
+**This step should only be used on a local cluster for demo purposes.**
+
+Create a role binding to allow Argo Workflows to create resources in the `argo` namespace:
+```shell
+kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=argo:default --namespace=argo
+```
+
 Submit workflow using Argo CLI¶
 ```shell
 argo submit \
