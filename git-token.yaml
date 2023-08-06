@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: git-token
+type: Opaque
+data:
+  token: YOUR_BASE64_ENCODED_GITHUB_TOKEN
