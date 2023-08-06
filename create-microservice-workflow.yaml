@@ -10,11 +10,14 @@ spec:
       - name: owner-username
       - name: team
       - name: description
-  volumes:
-    - name: workspace
-      emptyDir:
-        medium: Memory
-        sizeLimit: 2Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: workspace
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 2Gi
   templates:
     - name: main
       steps:
