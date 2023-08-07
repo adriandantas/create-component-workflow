@@ -14,9 +14,9 @@ sequenceDiagram
   participant VolumeClaim as Volume Claim
 
   MainFlow->>ValidateInput: 1 - START Validation Step
+  activate ValidateInput
   activate VolumeClaim
   Note over MainFlow,ValidateInput: ARGUMENTS<br/>service-name<br/>owner-username<br/>team<br/>description
-  activate ValidateInput
   ValidateInput->>VolumeClaim: Store validated arguments in a JSON file
   Note over ValidateInput,VolumeClaim: /workspace/result.json
   ValidateInput-->>MainFlow: Ouput parameter:<br/>result containingJSON Payload
