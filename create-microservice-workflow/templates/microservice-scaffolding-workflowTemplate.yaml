@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: microservice-scaffolding
+spec:
+  inputs:
+    parameters:
+      - name: service-name
+      - name: owner-username
+      - name: team
+      - name: description
+      - name: template-dir
+  container:
+    image: adriandantas/cookiecutter:2.3.0
+    args: [
+      "--no-input",
+      "-o", "/workspace",
+      "{{inputs.parameters.template-dir}}",
+      "serviceName={{inputs.parameters.service-name}}",
+      "ownerUsername={{inputs.parameters.owner-username}}",
+      "team={{inputs.parameters.team}}",
+      "description={{inputs.parameters.description}}"
+    ]
+    volumeMounts:
+      - name: workspace
+        mountPath: /workspace
