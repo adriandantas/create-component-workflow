@@ -15,11 +15,11 @@ spec:
     args: [
       "--no-input",
       "-o", "/workspace",
-      "{{inputs.parameters.template-dir}}",
-      "serviceName={{inputs.parameters.service-name}}",
-      "ownerUsername={{inputs.parameters.owner-username}}",
-      "team={{inputs.parameters.team}}",
-      "description={{inputs.parameters.description}}"
+      "{{ "{{inputs.parameters.template-dir}}" | quote }}",
+      "serviceName={{ "{{inputs.parameters.service-name}}" | quote }}",
+      "ownerUsername={{ "{{inputs.parameters.owner-username}}" | quote }}",
+      "team={{ "{{inputs.parameters.team}}" | quote }}",
+      "description={{ "{{inputs.parameters.description}}" | quote }}"
     ]
     volumeMounts:
       - name: workspace

@@ -1,0 +1,78 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: create-microservice-automation-
+spec:
+  entrypoint: main
+  arguments:
+    parameters:
+      - name: service-name
+      - name: owner-username
+      - name: team
+      - name: description
+  volumeClaimTemplates:
+    - metadata:
+        name: workspace
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 2Gi
+  templates:
+    - name: main
+      steps:
+        - - name: validate-input
+            templateRef:
+              name: validate-input
+              template: spec
+            arguments:
+              parameters:
+                - name: service-name
+                  value: "{{ "{{workflow.parameters.service-name}}" | quote }}"
+                - name: owner-username
+                  value: "{{ "{{workflow.parameters.owner-username}}" | quote }}"
+                - name: team
+                  value: "{{ "{{workflow.parameters.team}}" | quote }}"
+                - name: description
+                  value: "{{ "{{workflow.parameters.description}}" | quote }}"
+
+        - - name: template-checkout
+            templateRef:
+              name: template-checkout
+              template: spec
+            arguments:
+              parameters:
+                - name: gh-repo
+                  value: adriandantas/cookiecutter-quarkus-app
+                - name: template-dir
+                  value: /workspace/template
+
+        - - name: microservice-scaffolding
+            templateRef:
+              name: microservice-scaffolding
+              template: spec
+            arguments:
+              parameters:
+                - name: service-name
+                  value: "{{ "{{workflow.parameters.service-name}}" | quote }}"
+                - name: owner-username
+                  value: "{{ "{{workflow.parameters.owner-username}}" | quote }}"
+                - name: team
+                  value: "{{ "{{workflow.parameters.team}}" | quote }}"
+                - name: description
+                  value: "{{ "{{workflow.parameters.description}}" | quote }}"
+                - name: template-dir
+                  value: /workspace/template
+
+        - - name: create-repository
+            templateRef:
+              name: create-repository
+              template: spec
+            arguments:
+              parameters:
+                - name: user-name
+                  value: adriandantas
+                - name: repo-name
+                  value: "{{ "{{workflow.parameters.service-name}}" | quote }}"
+                - name: workspace-dir
+                  value: "/workspace"

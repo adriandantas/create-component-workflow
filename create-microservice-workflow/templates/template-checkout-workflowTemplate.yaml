@@ -20,9 +20,9 @@ spec:
             name: git-token
             key: token
       - name: GH_REPO
-        value: "{{inputs.parameters.gh-repo}}"
+        value: "{{ "{{inputs.parameters.gh-repo}}" | quote }}"
       - name: TEMPLATE_DIR
-        value: "{{inputs.parameters.template-dir}}"
+        value: "{{ "{{inputs.parameters.template-dir}}" | quote }}"
     args:
       - >
         git clone --single-branch -b main https://x-access-token:$GIT_TOKEN@github.com/$GH_REPO.git $TEMPLATE_DIR;
