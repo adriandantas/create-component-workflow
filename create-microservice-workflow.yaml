@@ -28,14 +28,13 @@ spec:
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{ "{{workflow.parameters.service-name}}" | quote }}"
+                  value: "{{workflow.parameters.service-name}}"
                 - name: owner-username
-                  value: "{{ "{{workflow.parameters.owner-username}}" | quote }}"
+                  value: "{{workflow.parameters.owner-username}}"
                 - name: team
-                  value: "{{ "{{workflow.parameters.team}}" | quote }}"
+                  value: "{{workflow.parameters.team}}"
                 - name: description
-                  value: "{{ "{{workflow.parameters.description}}" | quote }}"
-
+                  value: "{{workflow.parameters.description}}"
         - - name: template-checkout
             templateRef:
               name: template-checkout
@@ -46,7 +45,6 @@ spec:
                   value: adriandantas/cookiecutter-quarkus-app
                 - name: template-dir
                   value: /workspace/template
-
         - - name: microservice-scaffolding
             templateRef:
               name: microservice-scaffolding
@@ -54,16 +52,15 @@ spec:
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{ "{{workflow.parameters.service-name}}" | quote }}"
+                  value: "{{workflow.parameters.service-name}}"
                 - name: owner-username
-                  value: "{{ "{{workflow.parameters.owner-username}}" | quote }}"
+                  value: "{{workflow.parameters.owner-username}}"
                 - name: team
-                  value: "{{ "{{workflow.parameters.team}}" | quote }}"
+                  value: "{{workflow.parameters.team}}"
                 - name: description
-                  value: "{{ "{{workflow.parameters.description}}" | quote }}"
+                  value: "{{workflow.parameters.description}}"
                 - name: template-dir
                   value: /workspace/template
-
         - - name: create-repository
             templateRef:
               name: create-repository
@@ -73,6 +70,6 @@ spec:
                 - name: user-name
                   value: adriandantas
                 - name: repo-name
-                  value: "{{ "{{workflow.parameters.service-name}}" | quote }}"
+                  value: "{{workflow.parameters.service-name}}"
                 - name: workspace-dir
                   value: "/workspace"
