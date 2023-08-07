@@ -46,8 +46,8 @@ argo submit \
   -n argo \
   --watch \
   create-microservice-workflow.yaml \
-  --parameter service-name="my-service" \
-  --parameter owner-username="adriandantas" \
-  --parameter team="development" \
-  --parameter description="Sample microservice"
+  --parameter service-name="deepStateCatalog" \
+  --parameter owner-username="the_grandmaster" \
+  --parameter team="council-of-foreign-relations" \
+  --parameter description="A catalog organizational assets infiltrated nation states"
 ```
