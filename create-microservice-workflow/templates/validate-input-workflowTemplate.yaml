@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: validate-input
+spec:
+  inputs:
+    parameters:
+      - name: service-name
+      - name: owner-username
+      - name: team
+      - name: description
+  container:
+    image: adriandantas/step_validator:1.0.3
+    args: [
+      "--service-name", "{{inputs.parameters.service-name}}",
+      "--owner-username", "{{inputs.parameters.owner-username}}",
+      "--team", "{{inputs.parameters.team}}",
+      "--description", "{{inputs.parameters.description}}"
+    ]
+    volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+  outputs:
+    parameters:
+      - name: result
+        valueFrom:
+          path: /workspace/result.json

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: create-microservice-workflow
+description: A Helm chart to automate the creation of microservices
+version: 0.1.0
