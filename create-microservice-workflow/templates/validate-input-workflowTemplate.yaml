@@ -12,10 +12,10 @@ spec:
   container:
     image: adriandantas/step_validator:1.0.3
     args: [
-      "--service-name", "{{ "{{inputs.parameters.service-name}}" | quote }}",
-      "--owner-username", "{{ "{{inputs.parameters.owner-username}}" | quote }}",
-      "--team", "{{ "{{inputs.parameters.team}}" | quote }}",
-      "--description", "{{ "{{inputs.parameters.description}}" | quote }}"
+      "--service-name", "{{ "{{inputs.parameters.service-name}}" }}",
+      "--owner-username", "{{ "{{inputs.parameters.owner-username}}" }}",
+      "--team", "{{ "{{inputs.parameters.team}}" }}",
+      "--description", "{{ "{{inputs.parameters.description}}" }}"
     ]
     volumeMounts:
       - name: workspace
