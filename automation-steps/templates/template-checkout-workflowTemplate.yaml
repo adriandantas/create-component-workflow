@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: template-checkout-step
+spec:
+  entrypoint: main
+  arguments:
+      parameters:
+      - name: template-url
+      - name: template-dir
+  workflowMetadata:
+    labels:
+      automationType: step
+  templates:
+    - name: main
+      inputs:
+        parameters:
+          - name: template-url
+          - name: template-dir
+      container:
+        image: adriandantas/git-repo-cloner-py:1.0.0
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+        env:
+          - name: GIT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: github-token
+                key: token
+          - name: TEMPLATE_URL
+            value: "{{ "{{inputs.parameters.template-url}}" }}"
+          - name: TEMPLATE_DIR
+            value: "{{ "{{inputs.parameters.template-dir}}" }}"

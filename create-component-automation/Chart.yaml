@@ -1,0 +1,4 @@
+apiVersion: v2
+name: create-component-automation
+description: Create component automation workflow template
+version: 0.1.0

@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: validate-input-step
+spec:
+  entrypoint: main
+  arguments:
+      parameters:
+      - name: service-name
+      - name: owner-username
+      - name: team
+      - name: description
+  workflowMetadata:
+    labels:
+      automationType: step
+  templates:
+    - name: main
+      inputs:
+        parameters:
+          - name: service-name
+          - name: owner-username
+          - name: team
+          - name: description
+      container:
+        image: adriandantas/step_validator:1.0.3
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+        args: [
+          "--service-name", "{{ "{{inputs.parameters.service-name}}" }}",
+          "--owner-username", "{{ "{{inputs.parameters.owner-username}}" }}",
+          "--team", "{{ "{{inputs.parameters.team}}" }}",
+          "--description", "{{ "{{inputs.parameters.description}}" }}"
+        ]
+      outputs:
+        parameters:
+          - name: result
+            valueFrom:
+              path: /workspace/result.json
+
+      inputs:
+        parameters:
+          - name: service-name
+          - name: owner-username
+          - name: team
+          - name: description
+      container:
+        image: adriandantas/step_validator:1.0.3
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+        args: [
+          "--service-name", "{{ "{{inputs.parameters.service-name}}" }}",
+          "--owner-username", "{{ "{{inputs.parameters.owner-username}}" }}",
+          "--team", "{{ "{{inputs.parameters.team}}" }}",
+          "--description", "{{ "{{inputs.parameters.description}}" }}"
+        ]
+      outputs:
+        parameters:
+          - name: result
+            valueFrom:
+              path: /workspace/result.json
