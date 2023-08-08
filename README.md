@@ -28,11 +28,7 @@ sequenceDiagram
     MainFlow ->> ComponentScaffolding: Generate Component Project
     MainFlow ->> CreateRepository: Init Git Repository, Create GitHub Repo, Push Code
 ```
-
-Detailed sequence diagrams for each step can be found in the [docs](docs) folder.
-
-- [Detailed Sequence Diagram](./docs/create-component-workflow-sequence_diagram.md)
-- [Annotated Sequence Diagram](./docs/create-component-workflow-sequence_diagram_annotated.md)
+Detailed [Sequence Diagram](https://github.com/adriandantas/create-component-workflow/blob/main/docs/create-microservice-workflow-sequence_diagram.md) (with [annotations](https://github.com/adriandantas/create-component-workflow/blob/main/docs/create-microservice-workflow-sequence_diagram_annotated.md))
 
 ## Prerequisites
 
