@@ -31,8 +31,8 @@ sequenceDiagram
 
 Detailed sequence diagrams for each step can be found in the [docs](docs) folder.
 
-- [Detailed Sequence Diagram](docs/create-component-workflow-sequence_diagram.md)
-- [Annotated Sequence Diagram](docs/create-component-workflow-sequence_diagram_annotated.md)
+- [Detailed Sequence Diagram](./docs/create-component-workflow-sequence_diagram.md)
+- [Annotated Sequence Diagram](./docs/create-component-workflow-sequence_diagram_annotated.md)
 
 ## Prerequisites
 
