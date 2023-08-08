@@ -1,22 +1,22 @@
-# Create Microservice Workflow
+# Create Component Workflow
 
-This Helm chart automates the process of creating microservices, including validating inputs, checking out templates,
-scaffolding microservices, and creating repositories on GitHub.
+This Helm chart automates the process of creating components, including validating inputs, checking out templates,
+scaffolding components, and creating repositories on GitHub.
 
 ## Overview
 
 This Helm chart defines a set of Workflow Templates and a main Workflow that:
 
-1. Validates input parameters for the microservice (service name, owner username, team, description).
+1. Validates input parameters for the component (service name, owner username, team, description).
 2. Clones a specified template from GitHub.
-3. Generates the microservice code based on the input parameters and the template.
+3. Generates the component code based on the input parameters and the template.
 4. Creates a GitHub repository (if it doesn't exist).
 5. Pushes the generated code to the newly created GitHub repository.
 
 ```mermaid
 graph TD;
 A[Validate Input] --> B[Clone Template];
-B --> C[Generate Microservice];
+B --> C[Generate Component];
 C --> D[Create Repository];
 D --> E[Push to GitHub];
 ```
@@ -53,8 +53,8 @@ images and repositories:
 ### Clone the Repository
 
 ```shell
-git clone https://github.com/adriandantas/create-microservice-workflow.git
-cd create-microservice-workflow
+git clone https://github.com/adriandantas/create-component-workflow.git
+cd create-component-workflow
 ```
 
 ### Demo Setup Chart

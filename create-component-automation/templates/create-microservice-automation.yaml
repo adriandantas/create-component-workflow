@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: create-microservice-automation
+  name: create-component-automation
 spec:
   entrypoint: main
   arguments:
@@ -48,9 +48,9 @@ spec:
                   value: adriandantas/cookiecutter-quarkus-app
                 - name: template-dir
                   value: /workspace/template
-        - - name: microservice-scaffolding
+        - - name: component-scaffolding
             templateRef:
-              name: microservice-scaffolding-step
+              name: component-scaffolding-step
               template: main
             arguments:
               parameters:
