@@ -1,4 +1,4 @@
-## create-microservice-workflow sequence diagram
+## create-component-workflow sequence diagram
 
 ```mermaid
 sequenceDiagram
@@ -6,8 +6,8 @@ sequenceDiagram
   participant ValidateInput as Validate Input
   link ValidateInput: Repo @ https://github.com/adriandantas/step-validator
   participant TemplateCheckout as Template Checkout
-  participant MicroserviceScaffolding as Service Scaffolding
-  link MicroserviceScaffolding: Repo @ https://github.com/adriandantas/cookiecutter
+  participant ComponentScaffolding as Service Scaffolding
+  link ComponentScaffolding: Repo @ https://github.com/adriandantas/cookiecutter
   participant CreateRepository as Create Repo
   participant TemplateRepo as Template Repo
   participant GitHub as GitHub API
@@ -31,13 +31,13 @@ sequenceDiagram
   TemplateCheckout-->>MainFlow: execution code
   deactivate TemplateCheckout
 
-  MainFlow->>MicroserviceScaffolding: 3 - START Scaffolding Step
-  activate MicroserviceScaffolding
-  Note over MainFlow,MicroserviceScaffolding: ARGUMENTS<br/>service-name<br/>owner-username<br/>team<br/>description<br/>template-dir
-  MicroserviceScaffolding->>VolumeClaim: Generate Microservice Project using Cooliecutter template
-    Note over MicroserviceScaffolding,VolumeClaim: Creates a new directory using the template<br/> as source >and replaces all template variables<br/>with values from the input parameters.
-  MicroserviceScaffolding-->>MainFlow: execution code
-  deactivate MicroserviceScaffolding
+  MainFlow->>ComponentScaffolding: 3 - START Scaffolding Step
+  activate ComponentScaffolding
+  Note over MainFlow,ComponentScaffolding: ARGUMENTS<br/>service-name<br/>owner-username<br/>team<br/>description<br/>template-dir
+  ComponentScaffolding->>VolumeClaim: Generate Component Project using Cooliecutter template
+    Note over ComponentScaffolding,VolumeClaim: Creates a new directory using the template<br/> as source >and replaces all template variables<br/>with values from the input parameters.
+  ComponentScaffolding-->>MainFlow: execution code
+  deactivate ComponentScaffolding
 
   MainFlow->>CreateRepository: 4 - START Repository Creation Step
   activate CreateRepository
@@ -45,7 +45,7 @@ sequenceDiagram
   CreateRepository->>GitHub: Create Repository
   CreateRepository->>VolumeClaim: Create Local Git Repository
   Note over CreateRepository,VolumeClaim: Git init, remote origin, main branch, initial commit
-  CreateRepository->>GitHub: Push Generated Microservice
+  CreateRepository->>GitHub: Push Generated Component
   CreateRepository-->>MainFlow: Repository Creation Complete
   deactivate CreateRepository
   deactivate VolumeClaim

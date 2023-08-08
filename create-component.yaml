@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: create-microservice-automation-
+  generateName: create-component-automation-
 spec:
   workflowTemplateRef:
-    name: create-microservice-automation
+    name: create-component-automation
   workflowMetadata:
     labels:
       automationType: execution
