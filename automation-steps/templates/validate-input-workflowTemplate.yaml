@@ -23,15 +23,38 @@ spec:
           - name: description
       container:
         image: adriandantas/step_validator:1.0.3
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
         args: [
           "--service-name", "{{ "{{inputs.parameters.service-name}}" }}",
           "--owner-username", "{{ "{{inputs.parameters.owner-username}}" }}",
           "--team", "{{ "{{inputs.parameters.team}}" }}",
           "--description", "{{ "{{inputs.parameters.description}}" }}"
         ]
+      outputs:
+        parameters:
+          - name: result
+            valueFrom:
+              path: /workspace/result.json
+
+      inputs:
+        parameters:
+          - name: service-name
+          - name: owner-username
+          - name: team
+          - name: description
+      container:
+        image: adriandantas/step_validator:1.0.3
         volumeMounts:
           - name: workspace
             mountPath: /workspace
+        args: [
+          "--service-name", "{{ "{{inputs.parameters.service-name}}" }}",
+          "--owner-username", "{{ "{{inputs.parameters.owner-username}}" }}",
+          "--team", "{{ "{{inputs.parameters.team}}" }}",
+          "--description", "{{ "{{inputs.parameters.description}}" }}"
+        ]
       outputs:
         parameters:
           - name: result
