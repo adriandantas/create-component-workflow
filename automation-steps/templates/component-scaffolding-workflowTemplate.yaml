@@ -25,6 +25,9 @@ spec:
           - name: template-dir
       container:
         image: adriandantas/cookiecutter:2.3.0
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
         args: [
           "--no-input",
           "-o", "/workspace",
@@ -34,6 +37,3 @@ spec:
           "team={{ "{{inputs.parameters.team}}" }}",
           "description={{ "{{inputs.parameters.description}}" }}"
         ]
-        volumeMounts:
-          - name: workspace
-            mountPath: /workspace

@@ -19,10 +19,10 @@ spec:
           - name: template-dir
       container:
         image: alpine/git
-        command: [ "/bin/sh", "-c" ]
         volumeMounts:
           - name: workspace
             mountPath: /workspace
+        command: [ "/bin/sh", "-c" ]
         env:
           - name: GIT_TOKEN
             valueFrom:
