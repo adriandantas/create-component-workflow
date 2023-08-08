@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: template-checkout-step
+spec:
+  entrypoint: main
+  arguments:
+      parameters:
+      - name: gh-repo
+      - name: template-dir
+  workflowMetadata:
+    labels:
+      automationType: step
+  templates:
+    - name: main
+      inputs:
+        parameters:
+          - name: gh-repo
+          - name: template-dir
+      container:
+        image: alpine/git
+        command: [ "/bin/sh", "-c" ]
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+        env:
+          - name: GIT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: github-token
+                key: token
+          - name: GH_REPO
+            value: "{{ "{{inputs.parameters.gh-repo}}" }}"
+          - name: TEMPLATE_DIR
+            value: "{{ "{{inputs.parameters.template-dir}}" }}"
+        args:
+          - >
+            git clone --single-branch -b main https://x-access-token:$GIT_TOKEN@github.com/$GH_REPO.git $TEMPLATE_DIR;
+            echo 'Repository cloned successfully';

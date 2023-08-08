@@ -52,51 +52,40 @@ images and repositories:
 
 ### Clone the Repository
 
-```bash
+```shell
 git clone https://github.com/adriandantas/create-microservice-workflow.git
 cd create-microservice-workflow
 ```
 
-### Helm Chart Configuration
+### Demo Setup Chart
 
-#### GitHub Token Secret
+The demo setup chart is used to install the dependencies for the demo, including a secret to hold the GitHub token and a
+role binding that grants the admin cluster role to the default service account in the argo
+namespace.
 
-The Helm chart includes a template to create a Kubernetes Secret to hold the GitHub token. This token is used for
-authentication with the GitHub API. Make sure to provide your GitHub token in the values.yaml file or during the Helm
-install.
-
-#### Role Binding for Argo Workflow
-
-The Helm chart includes a role binding that grants the admin cluster role to the default service account in the argo
-namespace. This role binding allows the Argo Workflow service account to have administrative privileges, which can be
-necessary for executing certain operations within the namespace.
-
-##### Role Binding Configuration
-
-The role binding is defined in the `templates/rolebinding.yaml` file and can be customized using the following
-parameters in the `values.yaml` file:
-
-- `rolebinding.name`: The name of the role binding (default: default-admin).
-- `rolebinding.clusterRole`: The cluster role to bind to the service account (default: admin).
-- `rolebinding.serviceAccountName`: The name of the service account to bind to the cluster role (default: default).
-- `rolebinding.namespace`: The namespace in which the role binding and service account are defined (default: argo).
-
-###### Example - customizing Role Binding Configuration
-
-To customize the role binding, you can modify the values in `values.yaml` or provide them when installing the Helm chart
-using the `--set` option. Here's an example of how to set a custom service account name:
-
-```bash
-helm install my-release ./my-chart --set rolebinding.serviceAccountName=my-service-account
+```shell
+helm install -n argo automation-demo-setup ./automation-demo-setup --set githubToken=<your-github-token>
 ```
 
-### Install Helm Chart
+### Automation Steps Chart
 
-```bash
-helm install create-microservice-release ./helm-chart
+Since several steps can be reused in different workflows, we have created a chart to install the automation steps. This
+chart installs the following steps:
+
+```shell
+helm install -n argo automation-steps ./automation-steps
 ```
 
-# Running the demo
+### Create Component Automation Chart
+
+This chart installs the workflow template that creates component repositories using as source a cookiecutter template
+and replacing template variables with values passed as workflow input arguments.
+
+```shell
+helm install -n argo create-component-automation ./create-component-automation
+```
+
+## Running The Demo
 
 ### Enabling port-forwarding to Argo Workflows server
 
@@ -106,15 +95,25 @@ Create a port-forward to the Argo Workflows server:
 kubectl -n argo port-forward deployment/argo-server 2746:2746
 ```
 
-### Submit workflow using Argo CLI¶
+### Executing an Automation Workflow
+
+Submit the demo automation workflow using Argo CLI¶
 
 ```shell
-argo submit \
-  -n argo \
-  --watch \
-  create-microservice-workflow.yaml \
+argo submit -n argo  --watch \
+  create-component.yaml \
   --parameter service-name="deepStateCatalog" \
   --parameter owner-username="the_grandmaster" \
   --parameter team="council-of-foreign-relations" \
   --parameter description="A catalog organizational assets infiltrated nation states"
+```
+
+## Uninstalling the Demo
+
+Just uninstall the Helm charts with the following commands:
+
+```shell
+helm uninstall -n argo create-component-automation
+helm uninstall -n argo automation-steps
+helm uninstall -n argo automation-demo-setup
 ```

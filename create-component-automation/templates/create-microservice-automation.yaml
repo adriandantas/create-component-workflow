@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+kind: WorkflowTemplate
 metadata:
-  generateName: create-microservice-automation-
+  name: create-microservice-automation
 spec:
   entrypoint: main
   arguments:
@@ -18,27 +18,30 @@ spec:
         resources:
           requests:
             storage: 2Gi
+  workflowMetadata:
+    labels:
+      automationType: automation
   templates:
     - name: main
       steps:
         - - name: validate-input
             templateRef:
-              name: validate-input
-              template: spec
+              name: validate-input-step
+              template: main
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{workflow.parameters.service-name}}"
+                  value: "{{ "{{workflow.parameters.service-name}}" }}"
                 - name: owner-username
-                  value: "{{workflow.parameters.owner-username}}"
+                  value: "{{ "{{workflow.parameters.owner-username}}" }}"
                 - name: team
-                  value: "{{workflow.parameters.team}}"
+                  value: "{{ "{{workflow.parameters.team}}" }}"
                 - name: description
-                  value: "{{workflow.parameters.description}}"
+                  value: "{{ "{{workflow.parameters.description}}" }}"
         - - name: template-checkout
             templateRef:
-              name: template-checkout
-              template: spec
+              name: template-checkout-step
+              template: main
             arguments:
               parameters:
                 - name: gh-repo
@@ -47,29 +50,29 @@ spec:
                   value: /workspace/template
         - - name: microservice-scaffolding
             templateRef:
-              name: microservice-scaffolding
-              template: spec
+              name: microservice-scaffolding-step
+              template: main
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{workflow.parameters.service-name}}"
+                  value: "{{ "{{workflow.parameters.service-name}}" }}"
                 - name: owner-username
-                  value: "{{workflow.parameters.owner-username}}"
+                  value: "{{ "{{workflow.parameters.owner-username}}" }}"
                 - name: team
-                  value: "{{workflow.parameters.team}}"
+                  value: "{{ "{{workflow.parameters.team}}" }}"
                 - name: description
-                  value: "{{workflow.parameters.description}}"
+                  value: "{{ "{{workflow.parameters.description}}" }}"
                 - name: template-dir
                   value: /workspace/template
         - - name: create-repository
             templateRef:
-              name: create-repository
-              template: spec
+              name: create-repository-step
+              template: main
             arguments:
               parameters:
                 - name: user-name
                   value: adriandantas
                 - name: repo-name
-                  value: "{{workflow.parameters.service-name}}"
+                  value: "{{ "{{workflow.parameters.service-name}}" }}"
                 - name: workspace-dir
                   value: "/workspace"
