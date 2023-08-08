@@ -1,0 +1,4 @@
+apiVersion: v2
+name: create-component-demo-setup
+description: A Helm chart to set requirements fro create-component-demo-setup
+version: 0.1.0
