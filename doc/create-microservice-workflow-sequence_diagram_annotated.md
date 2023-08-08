@@ -24,7 +24,7 @@ sequenceDiagram
 
   MainFlow->>TemplateCheckout: 2 - START Template Checkout Step
   activate TemplateCheckout
-  Note over MainFlow,ValidateInput: ARGUMENTS<br/>gh-repo<br/>template-dir
+  Note over MainFlow,ValidateInput: ARGUMENTS<br/>template-url<br/>template-dir
   TemplateCheckout->>TemplateRepo: Git Clone Template project
   TemplateCheckout->>VolumeClaim: Write Template Project in Volume
     Note over TemplateCheckout,VolumeClaim: /workspace/template
