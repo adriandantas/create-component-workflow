@@ -10,6 +10,8 @@ spec:
       - name: owner-username
       - name: team
       - name: description
+      - name: template-url
+        value: "https://github.com/adriandantas/cookiecutter-quarkus-app.git"
   volumeClaimTemplates:
     - metadata:
         name: workspace
@@ -23,16 +25,6 @@ spec:
       automationType: automation
   templates:
     - name: main
-      inputs:
-        parameters:
-          - name: service-name
-            value: "{{ "{{workflow.parameters.service-name}}" }}"
-          - name: owner-username
-            value: "{{ "{{workflow.parameters.owner-username}}" }}"
-          - name: team
-            value: "{{ "{{workflow.parameters.team}}" }}"
-          - name: description
-            value: "{{ "{{workflow.parameters.description}}" }}"
       steps:
         - - name: validate-input
             templateRef:
@@ -41,21 +33,21 @@ spec:
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{ "{{input.parameters.service-name}}" }}"
+                  value: "{{ "{{workflow.parameters.service-name}}" }}"
                 - name: owner-username
-                  value: "{{ "{{input.parameters.owner-username}}" }}"
+                  value: "{{ "{{workflow.parameters.owner-username}}" }}"
                 - name: team
-                  value: "{{ "{{input.parameters.team}}" }}"
+                  value: "{{ "{{workflow.parameters.team}}" }}"
                 - name: description
-                  value: "{{ "{{input.parameters.description}}" }}"
+                  value: "{{ "{{workflow.parameters.description}}" }}"
         - - name: template-checkout
             templateRef:
               name: template-checkout-step
               template: main
             arguments:
               parameters:
-                - name: gh-repo
-                  value: adriandantas/cookiecutter-quarkus-app
+                - name: template-url
+                  value: "{{ "{{workflow.parameters.template-url}}" }}"
                 - name: template-dir
                   value: /workspace/template
         - - name: component-scaffolding
@@ -65,13 +57,13 @@ spec:
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{ "{{input.parameters.service-name}}" }}"
+                  value: "{{ "{{workflow.parameters.service-name}}" }}"
                 - name: owner-username
-                  value: "{{ "{{input.parameters.owner-username}}" }}"
+                  value: "{{ "{{workflow.parameters.owner-username}}" }}"
                 - name: team
-                  value: "{{ "{{input.parameters.team}}" }}"
+                  value: "{{ "{{workflow.parameters.team}}" }}"
                 - name: description
-                  value: "{{ "{{input.parameters.description}}" }}"
+                  value: "{{ "{{workflow.parameters.description}}" }}"
                 - name: template-dir
                   value: /workspace/template
         - - name: create-repository
@@ -83,6 +75,6 @@ spec:
                 - name: user-name
                   value: adriandantas
                 - name: repo-name
-                  value: "{{ "{{input.parameters.service-name}}" }}"
+                  value: "{{ "{{workflow.parameters.service-name}}" }}"
                 - name: workspace-dir
                   value: "/workspace"

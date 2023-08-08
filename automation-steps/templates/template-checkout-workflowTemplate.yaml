@@ -6,7 +6,7 @@ spec:
   entrypoint: main
   arguments:
       parameters:
-      - name: gh-repo
+      - name: template-url
       - name: template-dir
   workflowMetadata:
     labels:
@@ -15,25 +15,20 @@ spec:
     - name: main
       inputs:
         parameters:
-          - name: gh-repo
+          - name: template-url
           - name: template-dir
       container:
-        image: alpine/git
+        image: adriandantas/git-repo-cloner-py:1.0.0
         volumeMounts:
           - name: workspace
             mountPath: /workspace
-        command: [ "/bin/sh", "-c" ]
         env:
           - name: GIT_TOKEN
             valueFrom:
               secretKeyRef:
                 name: github-token
                 key: token
-          - name: GH_REPO
-            value: "{{ "{{inputs.parameters.gh-repo}}" }}"
+          - name: TEMPLATE_URL
+            value: "{{ "{{inputs.parameters.template-url}}" }}"
           - name: TEMPLATE_DIR
             value: "{{ "{{inputs.parameters.template-dir}}" }}"
-        args:
-          - >
-            git clone --single-branch -b main https://x-access-token:$GIT_TOKEN@github.com/$GH_REPO.git $TEMPLATE_DIR;
-            echo 'Repository cloned successfully';
