@@ -14,19 +14,25 @@ This Helm chart defines a set of Workflow Templates and a main Workflow that:
 5. Pushes the generated code to the newly created GitHub repository.
 
 #### High-Level Workflow Diagram
+
 ```mermaid
 sequenceDiagram
-  participant MainFlow as Main Flow
-  participant ValidateInput as Validate Input
-  participant TemplateCheckout as Template Checkout
-  participant ComponentScaffolding as Component Scaffolding
-  participant CreateRepository as Create Repo
+    participant MainFlow as Main Flow
+    participant ValidateInput as Validate Input
+    participant TemplateCheckout as Template Checkout
+    participant ComponentScaffolding as Component Scaffolding
+    participant CreateRepository as Create Repo
 
-  MainFlow->>ValidateInput: Validate Input Parameters
-  MainFlow->>TemplateCheckout: Clone Template Repository
-  MainFlow->>ComponentScaffolding: Generate Component Project
-  MainFlow->>CreateRepository: Init Git Repository, Create GitHub Repo, Push Code
+    MainFlow ->> ValidateInput: Validate Input Parameters
+    MainFlow ->> TemplateCheckout: Clone Template Repository
+    MainFlow ->> ComponentScaffolding: Generate Component Project
+    MainFlow ->> CreateRepository: Init Git Repository, Create GitHub Repo, Push Code
 ```
+
+Detailed sequence diagrams for each step can be found in the [docs](docs) folder.
+
+- [Detailed Sequence Diagram](docs/create-component-workflow-sequence_diagram.md)
+- [Annotated Sequence Diagram](docs/create-component-workflow-sequence_diagram_annotated.md)
 
 ## Prerequisites
 
