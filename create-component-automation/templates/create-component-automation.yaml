@@ -23,7 +23,17 @@ spec:
       automationType: automation
   templates:
     - name: main
-      steps:
+      inputs:
+        parameters:
+          - name: service-name
+            value: "{{ "{{workflow.parameters.service-name}}" }}"
+          - name: owner-username
+            value: "{{ "{{workflow.parameters.owner-username}}" }}"
+          - name: team
+            value: "{{ "{{workflow.parameters.team}}" }}"
+          - name: description
+            value: "{{ "{{workflow.parameters.description}}" }}"
+        steps:
         - - name: validate-input
             templateRef:
               name: validate-input-step
@@ -31,13 +41,13 @@ spec:
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{ "{{workflow.parameters.service-name}}" }}"
+                  value: "{{ "{{input.parameters.service-name}}" }}"
                 - name: owner-username
-                  value: "{{ "{{workflow.parameters.owner-username}}" }}"
+                  value: "{{ "{{input.parameters.owner-username}}" }}"
                 - name: team
-                  value: "{{ "{{workflow.parameters.team}}" }}"
+                  value: "{{ "{{input.parameters.team}}" }}"
                 - name: description
-                  value: "{{ "{{workflow.parameters.description}}" }}"
+                  value: "{{ "{{input.parameters.description}}" }}"
         - - name: template-checkout
             templateRef:
               name: template-checkout-step
@@ -55,13 +65,13 @@ spec:
             arguments:
               parameters:
                 - name: service-name
-                  value: "{{ "{{workflow.parameters.service-name}}" }}"
+                  value: "{{ "{{input.parameters.service-name}}" }}"
                 - name: owner-username
-                  value: "{{ "{{workflow.parameters.owner-username}}" }}"
+                  value: "{{ "{{input.parameters.owner-username}}" }}"
                 - name: team
-                  value: "{{ "{{workflow.parameters.team}}" }}"
+                  value: "{{ "{{input.parameters.team}}" }}"
                 - name: description
-                  value: "{{ "{{workflow.parameters.description}}" }}"
+                  value: "{{ "{{input.parameters.description}}" }}"
                 - name: template-dir
                   value: /workspace/template
         - - name: create-repository
@@ -73,6 +83,6 @@ spec:
                 - name: user-name
                   value: adriandantas
                 - name: repo-name
-                  value: "{{ "{{workflow.parameters.service-name}}" }}"
+                  value: "{{ "{{input.parameters.service-name}}" }}"
                 - name: workspace-dir
                   value: "/workspace"
