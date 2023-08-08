@@ -33,56 +33,56 @@ spec:
             value: "{{ "{{workflow.parameters.team}}" }}"
           - name: description
             value: "{{ "{{workflow.parameters.description}}" }}"
-        steps:
-        - - name: validate-input
-            templateRef:
-              name: validate-input-step
-              template: main
-            arguments:
-              parameters:
-                - name: service-name
-                  value: "{{ "{{input.parameters.service-name}}" }}"
-                - name: owner-username
-                  value: "{{ "{{input.parameters.owner-username}}" }}"
-                - name: team
-                  value: "{{ "{{input.parameters.team}}" }}"
-                - name: description
-                  value: "{{ "{{input.parameters.description}}" }}"
-        - - name: template-checkout
-            templateRef:
-              name: template-checkout-step
-              template: main
-            arguments:
-              parameters:
-                - name: gh-repo
-                  value: adriandantas/cookiecutter-quarkus-app
-                - name: template-dir
-                  value: /workspace/template
-        - - name: component-scaffolding
-            templateRef:
-              name: component-scaffolding-step
-              template: main
-            arguments:
-              parameters:
-                - name: service-name
-                  value: "{{ "{{input.parameters.service-name}}" }}"
-                - name: owner-username
-                  value: "{{ "{{input.parameters.owner-username}}" }}"
-                - name: team
-                  value: "{{ "{{input.parameters.team}}" }}"
-                - name: description
-                  value: "{{ "{{input.parameters.description}}" }}"
-                - name: template-dir
-                  value: /workspace/template
-        - - name: create-repository
-            templateRef:
-              name: create-repository-step
-              template: main
-            arguments:
-              parameters:
-                - name: user-name
-                  value: adriandantas
-                - name: repo-name
-                  value: "{{ "{{input.parameters.service-name}}" }}"
-                - name: workspace-dir
-                  value: "/workspace"
+      steps:
+      - - name: validate-input
+          templateRef:
+            name: validate-input-step
+            template: main
+          arguments:
+            parameters:
+              - name: service-name
+                value: "{{ "{{input.parameters.service-name}}" }}"
+              - name: owner-username
+                value: "{{ "{{input.parameters.owner-username}}" }}"
+              - name: team
+                value: "{{ "{{input.parameters.team}}" }}"
+              - name: description
+                value: "{{ "{{input.parameters.description}}" }}"
+      - - name: template-checkout
+          templateRef:
+            name: template-checkout-step
+            template: main
+          arguments:
+            parameters:
+              - name: gh-repo
+                value: adriandantas/cookiecutter-quarkus-app
+              - name: template-dir
+                value: /workspace/template
+      - - name: component-scaffolding
+          templateRef:
+            name: component-scaffolding-step
+            template: main
+          arguments:
+            parameters:
+              - name: service-name
+                value: "{{ "{{input.parameters.service-name}}" }}"
+              - name: owner-username
+                value: "{{ "{{input.parameters.owner-username}}" }}"
+              - name: team
+                value: "{{ "{{input.parameters.team}}" }}"
+              - name: description
+                value: "{{ "{{input.parameters.description}}" }}"
+              - name: template-dir
+                value: /workspace/template
+      - - name: create-repository
+          templateRef:
+            name: create-repository-step
+            template: main
+          arguments:
+            parameters:
+              - name: user-name
+                value: adriandantas
+              - name: repo-name
+                value: "{{ "{{input.parameters.service-name}}" }}"
+              - name: workspace-dir
+                value: "/workspace"
