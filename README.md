@@ -22,10 +22,10 @@ sequenceDiagram
   participant ComponentScaffolding as Component Scaffolding
   participant CreateRepository as Create Repo
 
-  MainFlow->>ValidateInput: 1 - START Validation Step
-  MainFlow->>TemplateCheckout: 2 - START Template Checkout Step
-  MainFlow->>ComponentScaffolding: 3 - START Scaffolding Step
-  MainFlow->>CreateRepository: 4 - START Repository Creation Step
+  MainFlow->>ValidateInput: Validate Input Parameters
+  MainFlow->>TemplateCheckout: Clone Template Repository
+  MainFlow->>ComponentScaffolding: Generate Component Project
+  MainFlow->>CreateRepository: Init Git Repository, Create GitHub Repo, Push Code
 ```
 
 ## Prerequisites
