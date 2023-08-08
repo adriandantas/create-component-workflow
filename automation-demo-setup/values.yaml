@@ -1,0 +1,6 @@
+githubToken: YOUR_GITHUB_TOKEN_HERE
+rolebinding:
+  name: default-admin
+  clusterRole: admin
+  serviceAccountName: default
+  namespace: argo
